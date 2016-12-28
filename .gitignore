@@ -1,3 +1,5 @@
+#Android Studio Configuration
+
 *.iml
 .gradle
 /local.properties
