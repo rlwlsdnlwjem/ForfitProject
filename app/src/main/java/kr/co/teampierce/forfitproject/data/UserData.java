@@ -9,7 +9,8 @@ public class UserData implements Serializable{
 
     private int picture;
     //TODO: temporary value at this time
-
+    private String name;
+    private String email;
     private float height;
     private float weight;
     private float waist;
