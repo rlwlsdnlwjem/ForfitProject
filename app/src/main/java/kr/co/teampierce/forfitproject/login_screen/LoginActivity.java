@@ -2,7 +2,6 @@ package kr.co.teampierce.forfitproject.login_screen;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +14,6 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONObject;
 
@@ -24,12 +22,10 @@ import java.util.Arrays;
 import kr.co.teampierce.forfitproject.R;
 import kr.co.teampierce.forfitproject.main_screen.MainActivity;
 
-import static android.R.attr.name;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
 
     private CallbackManager callbackManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-    public void gotomain(){
+    public void gotomain(View v){
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
         i.putExtra("name","testname");
         i.putExtra("email","test@test.com");

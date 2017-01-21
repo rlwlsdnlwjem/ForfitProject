@@ -3,6 +3,9 @@
     package="kr.co.teampierce.forfitproject">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.Camera" />
 
     <application
         android:allowBackup="true"
@@ -12,14 +15,20 @@
         android:theme="@style/AppTheme">
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
-        <activity android:name=".main_screen.MainActivity">
-        </activity>
-        <activity android:name=".login_screen.LoginActivity">
+        <activity android:name=".main_screen.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+        <activity android:name=".login_screen.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".camera_screen.CameraActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
     </application>
 
 </manifest>
