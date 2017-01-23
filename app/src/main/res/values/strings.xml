@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">ForfitProject</string>
     <string name="facebook_app_id">400782263610145</string>
-
+    <string name="kakao_app_key">b5c37a963f7f83bc31ccb4449b19f8c8</string>
 </resources>

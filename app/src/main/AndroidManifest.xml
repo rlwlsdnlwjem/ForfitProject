@@ -2,33 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kr.co.teampierce.forfitproject">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.Camera" />
 
     <application
+        android:name=".login_screen.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="b5c37a963f7f83bc31ccb4449b19f8c8" />
 
-        <activity android:name=".main_screen.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".login_screen.LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar">
+        <activity android:name=".main_screen.MainActivity" />
+        <activity android:name=".login_screen.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".camera_screen.CameraActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+        <activity android:name=".camera_screen.CameraActivity" />
+        <activity android:name=".album_screen.albumActivity"></activity>
     </application>
 
 </manifest>

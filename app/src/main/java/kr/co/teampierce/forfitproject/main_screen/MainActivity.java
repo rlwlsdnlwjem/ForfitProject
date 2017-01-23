@@ -4,9 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.support.v7.widget.RecyclerView;
 
 import kr.co.teampierce.forfitproject.R;
+import kr.co.teampierce.forfitproject.album_screen.AlbumControl;
+import kr.co.teampierce.forfitproject.album_screen.albumActivity;
 import kr.co.teampierce.forfitproject.camera_screen.CameraActivity;
+
+import static android.R.attr.name;
 
 public class MainActivity extends Activity {
 
@@ -16,7 +23,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
         init();
     }
 
@@ -28,6 +34,11 @@ public class MainActivity extends Activity {
         String email = intent.getExtras().getString("email");
         Log.i("TAG","name :" + name + "email :" + email);
         */
+    }
+
+    public void onAlbumButton(View v){
+        Intent intent = new Intent(getApplicationContext(), albumActivity.class);
+        startActivity(intent);
     }
 
     public void onCameraButton(View v){
