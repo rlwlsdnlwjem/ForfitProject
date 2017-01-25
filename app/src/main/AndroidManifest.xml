@@ -29,8 +29,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".camera_screen.CameraActivity" />
-        <activity android:name=".album_screen.albumActivity"></activity>
+        <activity android:name=".album_screen.albumActivity"/>
+
+        <activity android:name=".compare_screen.compareActivity"
+            android:screenOrientation="landscape"
+            ></activity>
     </application>
 
 </manifest>

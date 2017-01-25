@@ -25,18 +25,18 @@ public class AlbumControl extends Activity{
 
     private final String image_titles[] = {
             "Img1",
-        /*    "Img2",
-            "Img3","Img4","Img5","Img6","Img7","Img8",*/
+            "Img2",
+            "Img3","Img4","Img5","Img6","Img7","Img8",
     };
     private final Integer image_ids[] = {
             R.drawable.testimg1,
-         /*   R.drawable.testimg2,
+            R.drawable.testimg2,
             R.drawable.testimg3,
             R.drawable.testimg4,
             R.drawable.testimg5,
             R.drawable.testimg6,
             R.drawable.testimg7,
-            R.drawable.testimg8,*/
+            R.drawable.testimg8,
     };
 
     AlbumControl(Activity _activity, RelativeLayout albumView, RecyclerView recyclerView){
@@ -53,11 +53,16 @@ public class AlbumControl extends Activity{
         recyclerView.setLayoutManager(layoutManager);
         albumModels = prepareData();
         AlbumAdapter adapter = new AlbumAdapter(albumActivity.getApplicationContext(), albumModels);
+        adapter.setSelectedItemNum(0);
+        adapter.setSelectMode(false);
+
         recyclerView.setAdapter(adapter);
 
     }
 
     public ArrayList<AlbumModel> prepareData(){
+
+        // 여기서 싱글톤 데이터 가져와서 앨범에 넣어주고, 클릭, 삭제 같은 거 했을 때는 같은 번호에 해당하는 데이터를 지워주고 notify 하면됨
 
         ArrayList<AlbumModel> theimage = new ArrayList<>();
         for(int i = 0; i< image_titles.length; i++){
@@ -70,47 +75,8 @@ public class AlbumControl extends Activity{
         return theimage;
     }
 
-    public View.OnClickListener getOnClickAlbumButtonListener(){
-        Button.OnClickListener mClickListener = new View.OnClickListener() {
-            public void onClick(View v) {
-                RelativeLayout albumView = (RelativeLayout) albumActivity.findViewById(R.id.albumLayout);
-                if (albumView.getVisibility() == View.GONE || albumView.getVisibility() == View.INVISIBLE)
-                    albumView.setVisibility(View.VISIBLE);
-                else
-                    albumView.setVisibility(View.GONE);
-            }
-        };
-        return mClickListener;
 
-    }
-    public View.OnClickListener getOnClickCompareButtonListener(){
-        Button.OnClickListener mClickListener = new View.OnClickListener() {
-            public void onClick(View view){
-                AlbumAdapter albumAdapter = (AlbumAdapter) recyclerView.getAdapter();
-                for(int i=0;i<albumAdapter.getItemCount();i++){
-                    albumAdapter.albumList.get(i).setSelectMode(!albumAdapter.albumList.get(i).isSelectMode());
-                }
-                albumAdapter.notifyDataSetChanged();
-            }
-        };
-        return mClickListener;
 
-    }
-    public void getOnClickDeleteFirst(){
-
-    }
-    public void getOnClickCompareFirst(){
-
-    }
-    public void getOnClickCompareAfterCompare(){
-
-    }
-    public void getOnClickDeleteAfterDelete(){
-
-    }
-    public void getOnClickSelectAllAfterDelete(){
-
-    }
     public void onClickDelete(View view){
         // RecyclerView Rv = (RecyclerView) findViewById(R.id.albumRecyclerView);
         // albumModels.remove(2);

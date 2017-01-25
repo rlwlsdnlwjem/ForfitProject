@@ -8,9 +8,7 @@ public class AlbumModel {
 
     private String image_title;
     private Integer image_id;
-    //private static boolean SelectMode=false;
     private boolean isSelected = false;
-    private boolean selectMode=false;
 
     public String getImage_title() {
 
@@ -38,10 +36,6 @@ public class AlbumModel {
     public boolean isSelected() {
         return isSelected;
     }
-    public boolean isSelectMode(){
-        return selectMode;
-    }
-    public void setSelectMode(boolean mode){
-        selectMode=mode;
-    }
+
+
 }
