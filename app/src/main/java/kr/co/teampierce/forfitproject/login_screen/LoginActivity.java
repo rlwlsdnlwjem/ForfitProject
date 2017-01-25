@@ -99,6 +99,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         facebookLoginInit();
         setContentView(R.layout.activity_login);
+
+        gotoMain();
+        //for debug only
+
         //InitializeNaverAPI();
 
         /**카카오톡 로그아웃 요청**/

@@ -21,7 +21,8 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="b5c37a963f7f83bc31ccb4449b19f8c8" />
 
-        <activity android:name=".main_screen.MainActivity" />
+        <activity android:name=".main_screen.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".login_screen.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,12 +31,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".camera_screen.CameraActivity" />
-        <activity android:name=".album_screen.albumActivity"/>
+        <activity android:name=".camera_screen.CameraActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".album_screen.albumActivity"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".compare_screen.compareActivity"
-            android:screenOrientation="landscape"
-            ></activity>
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

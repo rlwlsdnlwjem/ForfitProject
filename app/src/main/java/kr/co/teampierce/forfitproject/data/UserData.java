@@ -7,8 +7,7 @@ public class UserData implements Serializable{
 
     Calendar timeAndDate;
 
-    private int picture;
-    //TODO: temporary value at this time
+    private int pictureId;
     private String name;
     private String email;
     private float height;
@@ -23,7 +22,7 @@ public class UserData implements Serializable{
     private float bmi;
     private float postureScore;
 
-    public UserData(int picture,
+    public UserData(int pictureId,
                     float height,
                     float weight,
                     float waist,
@@ -37,7 +36,7 @@ public class UserData implements Serializable{
 
         timeAndDate = Calendar.getInstance();
 
-        this.picture = picture;
+        this.pictureId = pictureId;
         this.height = height;
         this.weight = weight;
         this.waist = waist;
