@@ -108,13 +108,13 @@ public class LoginActivity extends AppCompatActivity {
         /**카카오톡 로그아웃 요청**/
         //한번 로그인이 성공하면 세션 정보가 남아있어서 로그인창이 뜨지 않고 바로 onSuccess()메서드를 호출합니다.
         //테스트 하시기 편하라고 매번 로그아웃 요청을 수행하도록 코드를 넣었습니다 ^^
-/*
+
         UserManagement.requestLogout(new LogoutResponseCallback() {
             @Override
             public void onCompleteLogout() {
                 //로그아웃 성공 후 하고싶은 내용 코딩 ~
             }
-        });*/
+        });
 
 
     }

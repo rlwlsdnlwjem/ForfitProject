@@ -39,10 +39,10 @@ public class AlbumControl extends Activity{
             R.drawable.testimg8,
     };
 
-    AlbumControl(Activity _activity, RelativeLayout albumView, RecyclerView recyclerView){
+    AlbumControl(Activity _activity, RecyclerView recyclerView){
 
         this.albumActivity= _activity;
-        this.albumView = albumView;
+       // this.albumView = albumView;
         this.recyclerView= recyclerView;
 
 
@@ -77,15 +77,6 @@ public class AlbumControl extends Activity{
 
 
 
-    public void onClickDelete(View view){
-        // RecyclerView Rv = (RecyclerView) findViewById(R.id.albumRecyclerView);
-        // albumModels.remove(2);
-        // Rv.getAdapter().notifyDataSetChanged();
 
-
-    }
-    public void onClickShow(View view){
-
-    }
 
 }

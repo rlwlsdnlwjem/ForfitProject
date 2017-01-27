@@ -14,11 +14,6 @@ import android.widget.RelativeLayout;
 import kr.co.teampierce.forfitproject.R;
 import kr.co.teampierce.forfitproject.compare_screen.compareActivity;
 
-import static android.R.attr.start;
-import static com.facebook.FacebookSdk.getApplicationContext;
-import static kr.co.teampierce.forfitproject.R.id.albumLayout;
-import static kr.co.teampierce.forfitproject.R.id.img;
-import static kr.co.teampierce.forfitproject.R.id.imgViewExpanded;
 
 public class albumActivity extends AppCompatActivity {
     private static RecyclerView recyclerView;
@@ -48,10 +43,19 @@ public class albumActivity extends AppCompatActivity {
     }
     public void onDeleteClick(View v){
         albumAdapter = (AlbumAdapter) recyclerView.getAdapter();
-        for(int i = 0; i < albumAdapter.albumList.size();i++){
+        for(int i = albumAdapter.albumList.size()-1; i >= 0 ;i--){
             Log.i("TAG", i + " check? : " + albumAdapter.albumList.get(i).isSelected());
+            if(albumAdapter.albumList.get(i).isSelected()) {
+                //TODO 지우기 할 때 여기서 데이터 싱글톤 불러다가 지우면 됨, 지우겠습니까 다이얼로그 띄우기
+                albumAdapter.albumList.get(i).setSelected(false);
+                albumAdapter.albumList.remove(i);
+
+            }
         }
+
         Log.i("TAG", "sel : " +albumAdapter.getSelectedItemNum());
+        //
+        albumAdapter.notifyDataSetChanged();
 
     }
 
@@ -63,8 +67,8 @@ public class albumActivity extends AppCompatActivity {
         deleteButton = (Button) findViewById(R.id.deleteButton);
         imgView = (ImageView) findViewById(R.id.imgViewExpanded);
 
-        RelativeLayout albumLayout = (RelativeLayout) findViewById(R.id.albumLayout);
-        AlbumControl albumControl = new AlbumControl(this, albumLayout, recyclerView);
+        RelativeLayout albumLayout = (RelativeLayout) findViewById(R.id.albumMenuLayout);
+        AlbumControl albumControl = new AlbumControl(this,  recyclerView);
         albumControl.albumInit();
 
     }
