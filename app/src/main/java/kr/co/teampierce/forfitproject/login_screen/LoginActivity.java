@@ -27,6 +27,9 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
+import com.nhn.android.naverlogin.OAuthLogin;
+import com.nhn.android.naverlogin.OAuthLoginHandler;
+import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 
 
 import org.json.JSONException;
@@ -39,27 +42,34 @@ import kr.co.teampierce.forfitproject.main_screen.MainActivity;
 
 import static android.R.attr.name;
 import static android.os.Build.ID;
+import static com.nhn.android.naverlogin.OAuthLogin.mOAuthLoginHandler;
 
 public class LoginActivity extends AppCompatActivity {
 
     private CallbackManager facebookCallbackManager; // 페이스북꺼
     private String mFacebookAccessToken;
     kakaoSessionCallback callback; // 카톡꺼
-/*
-    private static OAuthLogin mOAuthLoginModule;
+
+    private OAuthLogin mOAuthLoginModule;
 
     private void InitializeNaverAPI( )
     {
         mOAuthLoginModule = OAuthLogin.getInstance( );
         mOAuthLoginModule.init(
-                this,
+                LoginActivity.this,
                 "z4KvxGG4_zsLI_6mtbBK" ,
                 "MMS1oFMeVk" ,
                 "ForFit"
         );
 
         // 네이버 로그인 버튼 리스너 등록
-        OAuthLoginButton naverLoginButton = ( OAuthLoginButton ) findViewById( R.id.button_naverlogin );
+        OAuthLoginButton naverLoginButton = ( OAuthLoginButton ) findViewById( R.id.button_naverLogin);
+        //naverLoginButton.setOAuthLoginHandler(mOAuthLoginHandler);
+
+
+
+
+
         naverLoginButton.setOAuthLoginHandler( new OAuthLoginHandler( )
         {
             @Override
@@ -79,6 +89,9 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONObject json = new JSONObject( response );
                                 // response 객체에서 원하는 값 얻어오기
                                 String email = json.getJSONObject( "response" ).getString( "email" );
+                                Log.i("TAG","naverlogin result : " + email);
+                                Log.i("TAG","naverlogin json : " + json);
+
                                 // 액티비티 이동 등 원하는 함수 호출
                             } catch ( JSONException e )
                             {
@@ -92,30 +105,33 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         } );
+
+        
     }
-*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         facebookLoginInit();
-        setContentView(R.layout.activity_login);
 
-        gotoMain();
+        setContentView(R.layout.activity_login);
+        InitializeNaverAPI();
+        //gotoMain();
         //for debug only
 
-        //InitializeNaverAPI();
+
 
         /**카카오톡 로그아웃 요청**/
         //한번 로그인이 성공하면 세션 정보가 남아있어서 로그인창이 뜨지 않고 바로 onSuccess()메서드를 호출합니다.
         //테스트 하시기 편하라고 매번 로그아웃 요청을 수행하도록 코드를 넣었습니다 ^^
-
+/*
         UserManagement.requestLogout(new LogoutResponseCallback() {
             @Override
             public void onCompleteLogout() {
                 //로그아웃 성공 후 하고싶은 내용 코딩 ~
             }
         });
-
+*/
 
     }
 
