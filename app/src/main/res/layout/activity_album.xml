@@ -1,76 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_album"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context="kr.co.teampierce.forfitproject.album_screen.albumActivity">
 
 
-
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:id="@+id/albumMenuLayout"
-        android:layout_weight="94.64"
-        android:layout_height="40dp">
-
-
-
-
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        >
         <LinearLayout
-            android:id="@+id/albumMenu"
+            android:id="@+id/detailFrame"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_height="40dp">
-            <Button
-                android:id="@+id/compareButton"
-                android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:visibility="gone"
+            >
+            <ImageView
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="compare"
-                android:onClick="onCompareClick"
-                android:enabled="false"
-                android:background="@android:color/transparent"
-                android:layout_gravity="start"
-                android:textAlignment="textStart"
-                android:paddingLeft="20dp"
-                />
+                app:srcCompat="@android:drawable/zoom_plate"
+                android:id="@+id/imgViewDetail"
+                android:contentDescription=""
+                android:layout_weight="1" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:text="see"
-                android:gravity="center_vertical"
-                android:textSize="20sp"/>
-
-            <Button
-                android:id="@+id/deleteButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="delete"
-                android:enabled="false"
-                android:onClick="onDeleteClick"
-                android:background="@android:color/transparent"
-                android:layout_gravity="end"
-                android:textAlignment="textEnd"
-                android:paddingRight="20dp"
-                />
         </LinearLayout>
 
-    </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/albumFrame"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:id="@+id/albumMenuLayout"
+                android:layout_weight="1"
+                android:layout_height="0dp">
+
+
+                <LinearLayout
+                    android:id="@+id/albumMenu"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_height="40dp">
+                    <Button
+                        android:id="@+id/compareButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="compare"
+                        android:onClick="onCompareClick"
+                        android:enabled="false"
+                        android:background="@android:color/transparent"
+                        android:layout_gravity="start"
+                        android:textAlignment="textStart"
+                        android:paddingLeft="20dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:text="see"
+                        android:gravity="center_vertical"
+                        android:textSize="20sp"/>
+
+                    <Button
+                        android:id="@+id/deleteButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="delete"
+                        android:enabled="false"
+                        android:onClick="onDeleteClick"
+                        android:background="@android:color/transparent"
+                        android:layout_gravity="end"
+                        android:textAlignment="textEnd"
+                        android:paddingRight="20dp"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/albumRecyclerView"
+
+                android:layout_weight="8"
+                android:layout_height="0dp"
+                >
+
+            </android.support.v7.widget.RecyclerView>
+
+
+
+        </LinearLayout>
+    </FrameLayout>
 
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/mainMenuLayout"
         android:background="@color/cardview_dark_background"
         >
@@ -84,14 +127,14 @@
             android:id="@+id/imgViewExpanded"
             android:contentDescription=""
             android:layout_weight="1" />
+
+        <Button
+            android:text="album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button2"
+            android:layout_weight="1"
+            android:onClick="OnClickAlbum" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:id="@+id/albumRecyclerView"
-        android:layout_below="@id/albumMenuLayout"
-        android:layout_weight="5"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/mainMenuLayout" />
-
-</RelativeLayout>
+</LinearLayout>

@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -17,6 +19,12 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
@@ -40,6 +48,7 @@ import java.util.Arrays;
 import kr.co.teampierce.forfitproject.R;
 import kr.co.teampierce.forfitproject.main_screen.MainActivity;
 
+import static android.R.attr.button;
 import static android.R.attr.name;
 import static android.os.Build.ID;
 import static com.nhn.android.naverlogin.OAuthLogin.mOAuthLoginHandler;
@@ -50,7 +59,10 @@ public class LoginActivity extends AppCompatActivity {
     private String mFacebookAccessToken;
     kakaoSessionCallback callback; // 카톡꺼
 
-    private OAuthLogin mOAuthLoginModule;
+    private OAuthLogin mOAuthLoginModule;    // 네이버 꺼
+    private GoogleApiClient mGoogleApiClient; // 구글 꺼
+
+    private static final int RC_SIGN_IN=998;
 
     private void InitializeNaverAPI( )
     {
@@ -63,11 +75,12 @@ public class LoginActivity extends AppCompatActivity {
         );
 
         // 네이버 로그인 버튼 리스너 등록
-        OAuthLoginButton naverLoginButton = ( OAuthLoginButton ) findViewById( R.id.button_naverLogin);
+        //OAuthLoginButton naverLoginButton = ( OAuthLoginButton ) findViewById( R.id.button_naverLogin);
+      //  Button naverLoginButton=(Button)findViewById(R.id.button_naverLogin);
         //naverLoginButton.setOAuthLoginHandler(mOAuthLoginHandler);
 
 
-
+/*
 
 
         naverLoginButton.setOAuthLoginHandler( new OAuthLoginHandler( )
@@ -105,18 +118,83 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         } );
+*/
 
-        
     }
 
+
+    public void OnClickNaverLoginButton(View v){
+        //com.nhn.android.naverlogin.ui.view.OAuthLoginButton
+        mOAuthLoginModule.startOauthLoginActivity(this, new OAuthLoginHandler( )
+        {
+            @Override
+            public void run( boolean b )
+            {
+                if ( b )
+                {
+                    final String token = mOAuthLoginModule.getAccessToken( LoginActivity.this );
+                    new Thread( new Runnable( )
+                    {
+                        @Override
+                        public void run( )
+                        {
+                            String response = mOAuthLoginModule.requestApi( LoginActivity.this, token, "https://openapi.naver.com/v1/nid/me" );
+                            try
+                            {
+                                JSONObject json = new JSONObject( response );
+                                // response 객체에서 원하는 값 얻어오기
+                                String email = json.getJSONObject( "response" ).getString( "email" );
+                                Log.i("TAG","naverlogin result : " + email);
+                                Log.i("TAG","naverlogin json : " + json);
+
+                                // 액티비티 이동 등 원하는 함수 호출
+                            } catch ( JSONException e )
+                            {
+                                e.printStackTrace( );
+                            }
+                        }
+                    } ).start( );
+                }
+                else
+                {
+                }
+            }
+        });
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         facebookLoginInit();
 
         setContentView(R.layout.activity_login);
+
+        // status bar removing
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         InitializeNaverAPI();
-        //gotoMain();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this,null)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        //SignInButton buttonGoogleLogin = (SignInButton) findViewById(R.id.button_googleLogin);
+        Button buttonGoogleLogin = (Button) findViewById(R.id.button_googleLogin);
+        //com.google.android.gms.common.SignInButton
+        //buttonGoogleLogin.setBackgroundResource(R.drawable.testimg1);
+        //buttonGoogleLogin.setBackground(R.drawable.testimg8);
+        buttonGoogleLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+
+        gotoMain();
         //for debug only
 
 
@@ -141,17 +219,46 @@ public class LoginActivity extends AppCompatActivity {
 
         // facebookLoginResult(requestCode, resultCode, data);
 
+        if (requestCode == RC_SIGN_IN) {
+            //google 부분
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }else{
+            if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+                //카톡 부분
+                Log.i("TAG","onActivityResult");
+                return;
+            }
+            super.onActivityResult(requestCode, resultCode, data);
 
-        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
-            //카톡 부분
-            Log.i("TAG","onActivityResult");
-            return;
+            facebookCallbackManager.onActivityResult(requestCode, resultCode, data); // facebook 부분
+
         }
-        super.onActivityResult(requestCode, resultCode, data);
 
-        facebookCallbackManager.onActivityResult(requestCode, resultCode, data); // facebook 부분
+
+
+
 
     }
+
+    //구글꺼
+   private void handleSignInResult(GoogleSignInResult result) {
+        Log.d("TAG", "handleSignInResult:" + result.isSuccess());
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+            Log.i("TAG","google login result : " + acct.getEmail().toString());
+
+            //mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
+            //updateUI(true);
+        } else {
+            // Signed out, show unauthenticated UI.
+            Log.i("TAG", "google login failure");
+
+            //updateUI(false);
+        }
+    }
+
     public void gotoMain(){
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
         i.putExtra("name","testname");

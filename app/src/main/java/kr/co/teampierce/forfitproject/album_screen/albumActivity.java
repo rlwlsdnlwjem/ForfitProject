@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import kr.co.teampierce.forfitproject.R;
@@ -34,10 +35,20 @@ public class albumActivity extends AppCompatActivity {
     }
     public void onCompareClick(View v){
         Intent intent = new Intent(getApplicationContext(), compareActivity.class);
-        intent.putExtra("name","abc");
+
+        boolean left=false;
         albumAdapter = (AlbumAdapter) recyclerView.getAdapter();
+        // 2개 체크해서 넘김
         for(int i = 0; i < albumAdapter.albumList.size();i++){
             Log.i("TAG", i + " check? : " + albumAdapter.albumList.get(i).isSelected());
+            if(albumAdapter.albumList.get(i).isSelected()) {
+                if(!left){
+                    left=true;
+                    intent.putExtra("left",i);
+                }else{
+                    intent.putExtra("right",i);
+                }
+            }
         }
         startActivity(intent);
     }
@@ -105,4 +116,19 @@ public class albumActivity extends AppCompatActivity {
             super.onBackPressed();
     }
 
+    public void OnClickAlbum(View v){
+        LinearLayout detail = (LinearLayout) findViewById(R.id.detailFrame);
+        LinearLayout album = (LinearLayout) findViewById(R.id.albumFrame);
+        if(detail.getVisibility()!=View.VISIBLE){
+            detail.setVisibility(View.VISIBLE);
+            album.setVisibility(View.GONE);
+        }else{
+            detail.setVisibility(View.GONE);
+            album.setVisibility(View.VISIBLE);
+        }
+
+
+
+
+    }
 }

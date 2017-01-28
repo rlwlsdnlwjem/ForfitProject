@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -33,5 +34,6 @@ dependencies {
     compile group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
     compile 'com.android.support:recyclerview-v7:23.1.0'
     compile project(':3rdparty_login_library_android_4.1.4_source')
+    compile 'com.google.android.gms:play-services-auth:9.0.0'
 
 }

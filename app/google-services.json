@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1095800767591",
+    "project_id": "forfitpro"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095800767591:android:ea11925347c0a8d5",
+        "android_client_info": {
+          "package_name": "kr.co.teampierce.forfitproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095800767591-3hivmotgk1ih95skvv1dainn0qpa1mer.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.co.teampierce.forfitproject.login_screen",
+            "certificate_hash": "87BEBCD7B996A55ACBA62DA8BE9DB47A6CD478CA"
+          }
+        },
+        {
+          "client_id": "1095800767591-qig5ct7dt7skscl19rrmagd9ece11gcb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD26ouOG9W2saocSvUB2nt8kMcRoRVJsxU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
