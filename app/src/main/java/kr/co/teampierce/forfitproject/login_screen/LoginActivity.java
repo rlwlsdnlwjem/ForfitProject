@@ -95,8 +95,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-        gotoMain();
+        Log.i("TAG", "loginPage");
+        //gotoMain();
         //for debug only
 
 
