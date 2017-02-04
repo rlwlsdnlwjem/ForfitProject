@@ -68,6 +68,7 @@
 
         <Button
             android:text="NaverLogin"
+
             android:layout_height="0dp"
             android:layout_margin="5dp"
             android:layout_centerHorizontal="true"

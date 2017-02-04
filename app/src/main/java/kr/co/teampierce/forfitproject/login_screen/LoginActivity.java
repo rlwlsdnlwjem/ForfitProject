@@ -3,6 +3,7 @@ package kr.co.teampierce.forfitproject.login_screen;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,6 +65,55 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN=998;
 
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        facebookLoginInit();
+
+        setContentView(R.layout.activity_login);
+
+        // status bar removing
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        InitializeNaverAPI();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this,null)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        Button buttonGoogleLogin = (Button) findViewById(R.id.button_googleLogin);
+
+        buttonGoogleLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+
+        gotoMain();
+        //for debug only
+
+
+
+        /**카카오톡 로그아웃 요청**/
+        //한번 로그인이 성공하면 세션 정보가 남아있어서 로그인창이 뜨지 않고 바로 onSuccess()메서드를 호출합니다.
+        //테스트 하시기 편하라고 매번 로그아웃 요청을 수행하도록 코드를 넣었습니다 ^^
+/*
+        UserManagement.requestLogout(new LogoutResponseCallback() {
+            @Override
+            public void onCompleteLogout() {
+                //로그아웃 성공 후 하고싶은 내용 코딩 ~
+            }
+        });
+*/
+
+    }
     private void InitializeNaverAPI( )
     {
         mOAuthLoginModule = OAuthLogin.getInstance( );
@@ -76,49 +126,9 @@ public class LoginActivity extends AppCompatActivity {
 
         // 네이버 로그인 버튼 리스너 등록
         //OAuthLoginButton naverLoginButton = ( OAuthLoginButton ) findViewById( R.id.button_naverLogin);
-      //  Button naverLoginButton=(Button)findViewById(R.id.button_naverLogin);
+        //  Button naverLoginButton=(Button)findViewById(R.id.button_naverLogin);
         //naverLoginButton.setOAuthLoginHandler(mOAuthLoginHandler);
 
-
-/*
-
-
-        naverLoginButton.setOAuthLoginHandler( new OAuthLoginHandler( )
-        {
-            @Override
-            public void run( boolean b )
-            {
-                if ( b )
-                {
-                    final String token = mOAuthLoginModule.getAccessToken( LoginActivity.this );
-                    new Thread( new Runnable( )
-                    {
-                        @Override
-                        public void run( )
-                        {
-                            String response = mOAuthLoginModule.requestApi( LoginActivity.this, token, "https://openapi.naver.com/v1/nid/me" );
-                            try
-                            {
-                                JSONObject json = new JSONObject( response );
-                                // response 객체에서 원하는 값 얻어오기
-                                String email = json.getJSONObject( "response" ).getString( "email" );
-                                Log.i("TAG","naverlogin result : " + email);
-                                Log.i("TAG","naverlogin json : " + json);
-
-                                // 액티비티 이동 등 원하는 함수 호출
-                            } catch ( JSONException e )
-                            {
-                                e.printStackTrace( );
-                            }
-                        }
-                    } ).start( );
-                }
-                else
-                {
-                }
-            }
-        } );
-*/
 
     }
 
@@ -161,58 +171,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        facebookLoginInit();
-
-        setContentView(R.layout.activity_login);
-
-        // status bar removing
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        InitializeNaverAPI();
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this,null)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
-        //SignInButton buttonGoogleLogin = (SignInButton) findViewById(R.id.button_googleLogin);
-        Button buttonGoogleLogin = (Button) findViewById(R.id.button_googleLogin);
-        //com.google.android.gms.common.SignInButton
-        //buttonGoogleLogin.setBackgroundResource(R.drawable.testimg1);
-        //buttonGoogleLogin.setBackground(R.drawable.testimg8);
-        buttonGoogleLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-                startActivityForResult(signInIntent, RC_SIGN_IN);
-            }
-        });
-
-
-        gotoMain();
-        //for debug only
-
-
-
-        /**카카오톡 로그아웃 요청**/
-        //한번 로그인이 성공하면 세션 정보가 남아있어서 로그인창이 뜨지 않고 바로 onSuccess()메서드를 호출합니다.
-        //테스트 하시기 편하라고 매번 로그아웃 요청을 수행하도록 코드를 넣었습니다 ^^
-/*
-        UserManagement.requestLogout(new LogoutResponseCallback() {
-            @Override
-            public void onCompleteLogout() {
-                //로그아웃 성공 후 하고싶은 내용 코딩 ~
-            }
-        });
-*/
-
-    }
-
     //공통
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
