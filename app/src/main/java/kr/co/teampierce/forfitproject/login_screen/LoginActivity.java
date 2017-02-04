@@ -70,10 +70,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        autoLoginCheck();
         facebookLoginInit();
-
         setContentView(R.layout.activity_login);
-
         // status bar removing
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         InitializeNaverAPI();
@@ -156,7 +155,8 @@ public class LoginActivity extends AppCompatActivity {
                                 String email = json.getJSONObject( "response" ).getString( "email" );
                                 Log.i("TAG","naverlogin result : " + email);
                                 Log.i("TAG","naverlogin json : " + json);
-
+                                setAppPreferences(LoginActivity.this, "ACCESS_TOKEN", "naverLoginSuccess");
+                                gotoMain();
                                 // 액티비티 이동 등 원하는 함수 호출
                             } catch ( JSONException e )
                             {
@@ -206,9 +206,10 @@ public class LoginActivity extends AppCompatActivity {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             Log.i("TAG","google login result : " + acct.getEmail().toString());
-
+            setAppPreferences(LoginActivity.this, "ACCESS_TOKEN", "googleLoginSuccess");
             //mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             //updateUI(true);
+            gotoMain();
         } else {
             // Signed out, show unauthenticated UI.
             Log.i("TAG", "google login failure");
@@ -229,7 +230,7 @@ public class LoginActivity extends AppCompatActivity {
     private void setAppPreferences(Activity context, String key, String value)
     {
         SharedPreferences pref = null;
-        pref = context.getSharedPreferences("FacebookCon", 0);
+        pref = context.getSharedPreferences("AutoLogin", 0);
         SharedPreferences.Editor prefEditor = pref.edit();
         prefEditor.putString(key, value);
         prefEditor.commit();
@@ -241,26 +242,35 @@ public class LoginActivity extends AppCompatActivity {
         String returnValue = null;
 
         SharedPreferences pref = null;
-        pref = context.getSharedPreferences("FacebookCon", 0);
+        pref = context.getSharedPreferences("AutoLogin", 0);
 
         returnValue = pref.getString(key, "");
 
         return returnValue;
     }
 
-    // 페북
 
+    public void autoLoginCheck(){
+        String checkToken = getAppPreferences(this, "ACCESS_TOKEN");
+
+        // 그냥 적절한 토큰 값인지만 확인 (길이가 일정 이상) 한번 로그인 했다면 굉장히 긴 토큰을 가지고 있을 것이기 때문
+        if(checkToken.length() > 5 ) {
+            Log.i("TAG","checkToken : " + checkToken);
+            gotoMain();
+        }
+    }
+    // 페북
     public void facebookLoginInit(){
 
         FacebookSdk.sdkInitialize(this.getApplicationContext());
-
-        mFacebookAccessToken = getAppPreferences(this, "ACCESS_TOKEN");
+     /*   mFacebookAccessToken = getAppPreferences(this, "ACCESS_TOKEN");
 
         // 그냥 적절한 토큰 값인지만 확인 (길이가 일정 이상) 한번 로그인 했다면 굉장히 긴 토큰을 가지고 있을 것이기 때문
         if(mFacebookAccessToken.length() > 5 ) {
             Log.i("TAG","facebooktoken : " + mFacebookAccessToken);
             gotoMain();
-        }
+        }*/
+
 
     }
     public void facebookLoginResult(int requestCode, int resultCode, Intent data){
@@ -382,6 +392,7 @@ public class LoginActivity extends AppCompatActivity {
                     //사용자 ID는 보안상의 문제로 제공하지 않고 일련번호는 제공합니다.
                     Log.i("TAG", userProfile.toString());
                     Log.i("TAG","KakaoLoginsuccess");
+                    setAppPreferences(LoginActivity.this, "ACCESS_TOKEN", "kakaoLoginSuccess");
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     i.putExtra("name",name);
                     // i.putExtra("email",email);
