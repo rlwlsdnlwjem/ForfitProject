@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,12 +29,92 @@
             android:layout_height="wrap_content"
             android:text="2017 01 01 SUN"
             android:textSize="20sp"/>
+
     </LinearLayout>
 
-    <ListView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="70" />
+        android:layout_weight="10"
+        android:background="@color/com_facebook_button_background_color_disabled">
+
+
+        <TextView
+            android:text="   2016 12 30 FRI"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textView3"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:text="am 9:30   "
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textView2"
+            android:gravity="right|center_vertical"
+            android:layout_weight="1"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/imageView"
+        android:layout_weight="80"
+        android:contentDescription="aa"
+        android:background="@drawable/testyang" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:background="@color/com_facebook_button_background_color_disabled">
+
+        <TextView
+            android:text="BMI"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/textView37"
+            android:layout_weight="1"
+            android:textColor="@android:color/black"
+            />
+
+        <TextView
+            android:text="20.83"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/textView36"
+            android:layout_weight="1"
+            android:textColor="@android:color/black"
+            />
+
+        <TextView
+            android:text="forfitPoint"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/textView35"
+            android:layout_weight="1"
+            android:textColor="@android:color/black"
+            />
+
+        <TextView
+            android:text="73 / 100"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/textView34"
+            android:layout_weight="1"
+            android:textColor="@android:color/black"
+            />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -43,7 +124,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Home"/>
+            android:text="Home" />
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"

@@ -29,8 +29,8 @@
             android:layout_height="0dp"
             android:layout_weight="90"
 
-            app:srcCompat="?android:attr/textSelectHandle"
-            android:id="@+id/imageViewLeft" />
+            android:id="@+id/imageViewLeft"
+            android:background="@drawable/testyang" />
     </LinearLayout>
 
     <LinearLayout
@@ -320,8 +320,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:srcCompat="@android:drawable/presence_video_online"
             android:id="@+id/imageViewRight"
-            android:layout_weight="90" />
+            android:layout_weight="90"
+            android:background="@drawable/testyang" />
     </LinearLayout>
 </LinearLayout>
